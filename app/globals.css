@@ -1,0 +1,246 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Netflix-style Dark Theme */
+  --background: 0 0% 8%; /* Very dark black like Netflix */
+  --foreground: 0 0% 98%; /* White text */
+  --card: 0 0% 12%; /* Dark gray cards */
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 12%;
+  --popover-foreground: 0 0% 98%;
+
+  /* Primary: Netflix Red */
+  --primary: 0 90% 48%; /* Netflix red #e50914 */
+  --primary-foreground: 0 0% 98%;
+
+  /* Secondary: Dark Gray */
+  --secondary: 0 0% 20%;
+  --secondary-foreground: 0 0% 98%;
+
+  /* Muted: Medium Gray */
+  --muted: 0 0% 18%;
+  --muted-foreground: 0 0% 85%; /* Brighter for visibility */
+
+  /* Accent: Netflix Red */
+  --accent: 0 90% 48%;
+  --accent-foreground: 0 0% 98%;
+
+  /* Destructive: Red */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 0 0% 20%;
+  --input: 0 0% 15%;
+  --ring: 0 90% 48%;
+
+  /* Sidebar: Very Dark */
+  --sidebar: 0 0% 5%;
+  --sidebar-foreground: 0 0% 90%;
+  --sidebar-primary: 0 90% 48%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 0 0% 15%;
+  --sidebar-accent-foreground: 0 0% 90%;
+  --sidebar-border: 0 0% 15%;
+
+  /* Chart Colors */
+  --chart-1: 0 90% 48%; /* Netflix red */
+  --chart-2: 0 84% 60%; /* Lighter red */
+  --chart-3: 0 0% 50%; /* Gray */
+  --chart-4: 0 0% 40%; /* Dark gray */
+  --chart-5: 0 0% 30%; /* Darker gray */
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 0 0% 8%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 12%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 12%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 90% 48%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 0 0% 20%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 18%;
+  --muted-foreground: 0 0% 85%; /* Brighter for visibility */
+  --accent: 0 90% 48%;
+  --accent-foreground: 0 0% 98%;
+  --border: 0 0% 20%;
+  --input: 0 0% 15%;
+  --ring: 0 90% 48%;
+  --sidebar: 0 0% 5%;
+  --sidebar-foreground: 0 0% 90%;
+  --sidebar-primary: 0 90% 48%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 0 0% 15%;
+  --sidebar-accent-foreground: 0 0% 90%;
+  --sidebar-border: 0 0% 15%;
+}
+
+@theme inline {
+  --font-sans: "Geist", "Geist Fallback";
+  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-white;
+  }
+  
+  /* Ensure all text elements are visible */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-white font-semibold;
+  }
+  
+  p, span, div, label {
+    @apply text-white/90;
+  }
+  
+  /* Override for specific text classes */
+  .text-foreground {
+    @apply text-white;
+  }
+  
+  .text-muted-foreground {
+    @apply text-white/75;
+  }
+}
+
+@layer utilities {
+  .card {
+    @apply bg-card border border-border rounded-lg p-6 shadow-sm;
+  }
+  
+  .card-hover {
+    @apply transition-all hover:shadow-lg hover:border-primary/50;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium transition-all hover:bg-primary/90 hover:shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground px-4 py-2 rounded-md font-medium transition-all hover:bg-secondary/80;
+  }
+  
+  .badge {
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .badge-critical {
+    @apply bg-[#e50914] text-white;
+  }
+  
+  .badge-high {
+    @apply bg-orange-600 text-white;
+  }
+  
+  .badge-medium {
+    @apply bg-yellow-600 text-white;
+  }
+  
+  .badge-low {
+    @apply bg-green-600 text-white;
+  }
+  
+  .text-danger {
+    @apply text-[#e50914];
+  }
+  
+  .text-warning {
+    @apply text-orange-500;
+  }
+  
+  .text-info {
+    @apply text-blue-500;
+  }
+  
+  .text-success {
+    @apply text-green-500;
+  }
+  
+  .text-muted-light {
+    @apply text-white/85 font-medium;
+  }
+  
+  /* Override Tailwind's text-muted to be visible */
+  .text-muted {
+    color: rgb(255 255 255 / 0.75);
+  }
+  
+  /* Make sure all small text is visible */
+  .text-xs {
+    @apply text-white/80;
+  }
+  
+  .text-sm {
+    @apply text-white/85;
+  }
+  
+  /* Ensure icons are visible */
+  svg {
+    @apply text-white/90;
+  }
+  
+  /* Make sure card text is visible */
+  .card p, .card span, .card div {
+    @apply text-white/90;
+  }
+  
+  /* Ensure form elements have visible text */
+  input, textarea, select {
+    @apply text-white bg-input;
+  }
+  
+  input::placeholder, textarea::placeholder {
+    @apply text-white/50;
+  }
+  
+  .bg-card-border {
+    @apply bg-border/30;
+  }
+}

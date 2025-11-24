@@ -1,0 +1,192 @@
+================================================================================
+                    VULNMODELER PROJECT STRUCTURE GUIDE
+================================================================================
+
+QUICK OVERVIEW
+--------------
+vulnModeler/                    ← Root project directory
+│
+├─ backend/                     ← Python FastAPI server
+├─ app/                         ← Next.js root layout & config
+├─ pages/                       ← Feature pages (5 routes)
+├─ components/                  ← React components (custom + shadcn)
+├─ lib/                         ← API client & utilities
+├─ hooks/                       ← Custom React hooks
+├─ public/                      ← Static assets
+└─ Documentation files          ← README, SETUP, ARCHITECTURE, etc.
+
+
+DETAILED STRUCTURE
+==================
+
+BACKEND TIER (Python/FastAPI)
+─────────────────────────────
+backend/
+├─ main.py                  # REST API endpoints
+│  ├─ POST /analyze        # Code analysis
+│  ├─ POST /stride         # Threat mapping
+│  ├─ POST /diagram        # Diagram generation
+│  └─ GET /health          # Health check
+│
+├─ config.py               # Environment & settings
+├─ models.py               # Pydantic data schemas
+├─ analyzer.py             # Vulnerability detection (20+ patterns)
+├─ threat_model.py         # STRIDE categorization
+├─ diagrams.py             # Architecture diagram SVG generation
+├─ requirements.txt        # Python dependencies
+├─ .env.example            # Environment template
+└─ run.sh                  # Start script
+
+
+FRONTEND TIER (Next.js/React)
+─────────────────────────────
+
+Root Configuration:
+┌─ app/layout.tsx          # HTML structure, fonts, metadata
+├─ app/globals.css         # Global styles & design tokens
+├─ app/page.tsx            # Home route (/)
+└─ next.config.mjs         # Next.js configuration
+
+Feature Pages:
+┌─ pages/dashboard.tsx     # / route - Overview & stats
+├─ pages/scanner.tsx       # /scanner - File upload
+├─ pages/vulnerabilities.tsx # /vulnerabilities - Findings
+└─ pages/diagram-page.tsx  # /diagram - Architecture view
+
+Components:
+┌─ components/sidebar.tsx              # Navigation
+├─ components/upload-card.tsx          # File upload UI
+├─ components/vulnerabilities-table.tsx # Findings table
+├─ components/quick-stats.tsx          # Stats cards
+├─ components/diagram-viewer.tsx       # Diagram display
+├─ components/theme-provider.tsx       # Theme context
+└─ components/ui/                      # 40+ shadcn components
+   ├─ button.tsx, card.tsx, table.tsx, etc.
+
+Utilities:
+┌─ lib/api.ts              # API client with typed methods
+├─ lib/utils.ts            # Helper functions (cn utility)
+├─ hooks/use-mobile.ts     # Mobile detection hook
+└─ hooks/use-toast.ts      # Toast notification hook
+
+Assets:
+└─ public/                 # Images, logos, icons
+
+
+API ENDPOINTS (Backend ↔ Frontend)
+==================================
+
+POST /analyze
+├─ Request: { code: string }
+└─ Response: { vulnerabilities: [...], summary: {...} }
+
+POST /stride
+├─ Request: { findings: [...] }
+└─ Response: { threats: [...], categorized: {...} }
+
+POST /diagram
+├─ Request: { code: string }
+└─ Response: { svg: string, description: string }
+
+GET /health
+└─ Response: { status: "ok" }
+
+
+DATA FLOW
+=========
+
+User Browser
+    ↓
+Next.js Frontend
+    ├─ pages/*.tsx
+    ├─ components/
+    └─ lib/api.ts (HTTP Client)
+    ↓
+FastAPI Backend (Port 8000)
+    ├─ main.py (Routes)
+    ├─ analyzer.py
+    ├─ threat_model.py
+    └─ diagrams.py
+    ↓
+Analysis Results
+    ↓
+Frontend Displays Results
+    ├─ Dashboard (stats)
+    ├─ Vulnerabilities Table
+    ├─ STRIDE Categorization
+    └─ Architecture Diagram
+
+
+DEPENDENCY LAYERS
+=================
+
+Lowest Level:
+└─ backend/models.py          # Data schemas
+
+Middle Level:
+├─ backend/analyzer.py        # Core logic
+├─ backend/threat_model.py
+└─ backend/diagrams.py
+
+High Level:
+└─ backend/main.py            # HTTP Routes
+
+Frontend:
+├─ lib/api.ts                 # HTTP calls to backend
+├─ components/                # React components
+└─ pages/                     # Page composition
+
+
+KEY DESIGN PRINCIPLES
+====================
+
+✓ Separation of Concerns
+  - Backend: Analysis logic only
+  - Frontend: UI/UX only
+  - API: Clean contract between them
+
+✓ Reusability
+  - Components are small and focused
+  - API methods are typed and consistent
+  - Backend modules are independent
+
+✓ Maintainability
+  - One file per component
+  - Clear naming conventions
+  - Comprehensive documentation
+
+✓ Scalability
+  - Easy to add new pages
+  - Easy to add new analysis features
+  - Easy to extend threat categories
+
+
+GETTING STARTED
+===============
+
+1. Install Backend:
+   cd backend
+   pip install -r requirements.txt
+   python main.py
+
+2. Install Frontend:
+   npm install
+   npm run dev
+
+3. Visit http://localhost:3000
+
+4. Upload code to analyze
+
+
+WHAT GOES WHERE
+===============
+
+New Vulnerability Pattern?     → backend/analyzer.py
+New STRIDE Category?           → backend/threat_model.py
+New Dashboard Stat?            → pages/dashboard.tsx
+New Upload Feature?            → components/upload-card.tsx
+New API Route?                 → backend/main.py
+New Helper Function?           → lib/utils.ts
+New Page?                      → pages/new-page.tsx
+
+================================================================================
